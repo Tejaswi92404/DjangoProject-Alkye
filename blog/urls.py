@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import PostListCreate, PostDetail, CommentListCreate
+from .views import PostListCreate, PostDetail, CommentListCreate,GetDataCustom
 
 urlpatterns = [
     path('posts/', PostListCreate.as_view(), name='post-list-create'),

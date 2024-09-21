@@ -4,6 +4,7 @@ from django.shortcuts import render
 from rest_framework import generics, permissions
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
+import pandas as pd
 
 class PostListCreate(generics.ListCreateAPIView):
     queryset = Post.objects.all()
@@ -28,3 +29,11 @@ class CommentListCreate(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         post = Post.objects.get(pk=self.kwargs['post_pk'])
         serializer.save(author=self.request.user, post=post)
+
+class GetDataCustom(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def hello_world(self, serializer):
+        return render(self.request, 'template/model.html', {'message': 'Hello, world!'})
